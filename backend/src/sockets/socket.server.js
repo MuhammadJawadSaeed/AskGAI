@@ -23,7 +23,7 @@ function initSocketServer(httpServer) {
   });
 
   io.on("connection", (socket) => {
-    socket.io('ai-message', async (messagePayload) => {
+    socket.on('ai-message', async (messagePayload) => {
       console.log(messagePayload);
       
     })
