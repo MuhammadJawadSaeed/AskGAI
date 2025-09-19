@@ -8,8 +8,8 @@ async function registerUser(req, res) {
     email,
     password,
   } = req.body;
-
-  const isUserAlreadyExist = userModel.findOne({
+  
+  const isUserAlreadyExist = await userModel.findOne({
     email,
   });
   if (isUserAlreadyExist) {
