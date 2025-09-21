@@ -47,6 +47,13 @@ function initSocketServer(httpServer) {
           text: messagePayload.content,
         },
       });
+
+      const memory = await queryMemory({
+        queryVector: messageVector,
+        limit: 3,
+        metadata: {},
+      });
+
       const chatHistory = (
         await messageModel
           .find({
@@ -57,14 +64,27 @@ function initSocketServer(httpServer) {
           .lean()
       ).reverse();
 
-      const response = await aiService.generateResponse(
-        chatHistory.map((item) => {
-          return {
-            role: item.role,
-            parts: [{ text: item.content }],
-          };
-        })
-      );
+      const shortTermMemory = chatHistory.map((item) => {
+        return {
+          role: item.role,
+          parts: [{ text: item.content }],
+        };
+      });
+
+      const longTermMemory = [
+        {
+          role: "system",
+          parts: [
+            {
+              text: `these are some previous message from the chat, use them to generate the response ${memory
+                .map((item) => item.metadata.text)
+                .join("\n")}`,
+            },
+          ],
+        },
+      ];
+
+      const response = await aiService.generateResponse([...shortTermMemory, ...longTermMemory]);
 
       const responseMessage = await messageModel.create({
         chat: messagePayload.chat,
