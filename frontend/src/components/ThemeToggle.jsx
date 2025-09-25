@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'light';
+    return localStorage.getItem("theme") || "light";
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   function toggleTheme() {
-    setTheme(t => (t === 'light' ? 'dark' : 'light'));
+    setTheme((t) => (t === "light" ? "dark" : "light"));
   }
 
   return (
@@ -19,9 +19,11 @@ const ThemeToggle = () => {
       type="button"
       onClick={toggleTheme}
       className="theme-toggle"
-      aria-label={theme === 'light' ? 'Activate dark mode' : 'Activate light mode'}
+      aria-label={
+        theme === "light" ? "Activate dark mode" : "Activate light mode"
+      }
     >
-      {theme === 'light' ? '🌙' : '☀️'}
+      {theme === "light" ? "🌙" : "☀️"}
     </button>
   );
 };
