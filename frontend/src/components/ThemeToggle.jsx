@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const ThemeToggle = () => {
+const ThemeToggle = ({ className = "theme-toggle" }) => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "light";
+    return document.documentElement.getAttribute("data-theme") || "light";
   });
 
   useEffect(() => {
@@ -10,20 +10,20 @@ const ThemeToggle = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  function toggleTheme() {
-    setTheme((t) => (t === "light" ? "dark" : "light"));
-  }
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      className="theme-toggle"
+      className={className}
       aria-label={
-        theme === "light" ? "Activate dark mode" : "Activate light mode"
+        theme === "light" ? "Switch to dark mode" : "Switch to light mode"
       }
     >
-      {theme === "light" ? "🌙" : "☀️"}
+      {theme === "light" ? "Dark Mode" : "Light Mode"}
     </button>
   );
 };
