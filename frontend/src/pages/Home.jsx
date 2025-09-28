@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import ChatMobileBar from "../components/chat/ChatMobileBar.jsx";
-import ChatSidebar from "../components/chat/ChatSidebar.jsx";
+import ChatSidebar from "../components/chat/ChatSideBar.jsx";
 import ChatMessages from "../components/chat/ChatMessages.jsx";
 import ChatComposer from "../components/chat/ChatComposer.jsx";
 import "../components/chat/ChatLayout.css";
@@ -54,14 +54,21 @@ const Home = () => {
     }
   };
 
-  // 🚀 Handle Logout
-  const handleLogout = () => {
-    Cookies.remove("token");
-    dispatch(setChats([]));
-    setMessages([]);
-    setUser(null);
-    navigate("/login");
-  };
+ // 🚀 Handle Logout
+const handleLogout = async () => {
+  try {
+    await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
+  } catch (err) {
+    console.error("Logout error:", err);
+  }
+
+  Cookies.remove("token"); // just in case non-httpOnly token
+  dispatch(setChats([]));
+  setMessages([]);
+  setUser(null);
+  // navigate("/login"); // optional redirect
+};
+
 
   // 🚀 Fetch chats + user profile
   useEffect(() => {
@@ -73,7 +80,7 @@ const Home = () => {
       })
       .catch((err) => {
         if (err.response?.status === 401) {
-          navigate("/login");
+          // navigate("/login");
         }
       });
 
