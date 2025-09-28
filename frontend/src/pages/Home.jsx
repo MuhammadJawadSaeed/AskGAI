@@ -42,7 +42,7 @@ const Home = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/chat",
+        "https://askgai.onrender.com/api/chat",
         { title },
         { withCredentials: true }
       );
@@ -54,27 +54,30 @@ const Home = () => {
     }
   };
 
- // 🚀 Handle Logout
-const handleLogout = async () => {
-  try {
-    await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
-  } catch (err) {
-    console.error("Logout error:", err);
-  }
+  // 🚀 Handle Logout
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://askgai.onrender.com/api/auth/logout",
+        {},
+        { withCredentials: true }
+      );
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
 
-  Cookies.remove("token"); // just in case non-httpOnly token
-  dispatch(setChats([]));
-  setMessages([]);
-  setUser(null);
-  // navigate("/login"); // optional redirect
-};
-
+    Cookies.remove("token"); // just in case non-httpOnly token
+    dispatch(setChats([]));
+    setMessages([]);
+    setUser(null);
+    // navigate("/login"); // optional redirect
+  };
 
   // 🚀 Fetch chats + user profile
   useEffect(() => {
     // ✅ fetch chats
     axios
-      .get("http://localhost:3000/api/chat", { withCredentials: true })
+      .get("https://askgai.onrender.com/api/chat", { withCredentials: true })
       .then((response) => {
         dispatch(setChats(response.data.chats.reverse()));
       })
@@ -86,14 +89,14 @@ const handleLogout = async () => {
 
     // ✅ fetch logged in user
     axios
-      .get("http://localhost:3000/api/auth/me", { withCredentials: true })
+      .get("https://askgai.onrender.com/api/auth/me", { withCredentials: true })
       .then((res) => {
         setUser(res.data.user);
       })
       .catch(() => setUser(null));
 
     // ✅ setup socket
-    const tempSocket = io("http://localhost:3000", {
+    const tempSocket = io("https://askgai.onrender.com", {
       withCredentials: true,
     });
 
@@ -124,7 +127,7 @@ const handleLogout = async () => {
   const getMessages = async (chatId) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/chat/messages/${chatId}`,
+        `https://askgai.onrender.com/api/chat/messages/${chatId}`,
         { withCredentials: true }
       );
 
