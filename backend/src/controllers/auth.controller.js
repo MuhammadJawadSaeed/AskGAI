@@ -8,15 +8,12 @@ async function registerUser(req, res) {
     email,
     password,
   } = req.body;
-  
-  const isUserAlreadyExist = await userModel.findOne({
-    email,
-  });
+
+  const isUserAlreadyExist = await userModel.findOne({ email });
   if (isUserAlreadyExist) {
-    return res.status(400).json({
-      message: "User already exist",
-    });
+    return res.status(400).json({ message: "User already exist" });
   }
+
   const hashPassword = await bcrypt.hash(password, 10);
 
   const user = await userModel.create({
@@ -27,7 +24,7 @@ async function registerUser(req, res) {
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-  res.cookie("token", token);
+  res.cookie("token", token, { httpOnly: true });
 
   res.status(201).json({
     message: "User registered successfully",
@@ -41,33 +38,41 @@ async function registerUser(req, res) {
 
 async function loginUser(req, res) {
   const { email, password } = req.body;
-  const user = await userModel.findOne({
-    email,
-  });
+  const user = await userModel.findOne({ email });
   if (!user) {
-    return res.status(400).json({
-      message: "Invalid email or password",
-    });
+    return res.status(400).json({ message: "Invalid email or password" });
   }
+
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    return res.status(400).json({
-      message: "Invalid email or password",
-    });
+    return res.status(400).json({ message: "Invalid email or password" });
   }
+
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie("token", token);
+  res.cookie("token", token, { httpOnly: true });
 
   res.status(200).json({
     message: "User logged in successfully",
     user: {
-      fullName: {
-        email: user.email,
-        id: user._id,
-        fullName: user.fullName,
-      },
+      email: user.email,
+      id: user._id,
+      fullName: user.fullName,
     },
   });
 }
 
-module.exports = { registerUser, loginUser };
+async function getMe(req, res) {
+  if (!req.user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  res.status(200).json({
+    user: {
+      email: req.user.email,
+      id: req.user._id,
+      fullName: req.user.fullName,
+    },
+  });
+}
+
+module.exports = { registerUser, loginUser, getMe };

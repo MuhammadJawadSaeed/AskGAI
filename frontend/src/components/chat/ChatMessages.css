@@ -28,7 +28,7 @@
     font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-text-muted, #777);
+    color: var(--color-text-muted);
     margin-bottom: 4px;
     font-weight: 600;
 }
@@ -36,41 +36,40 @@
 /* Bubble styling refined */
 .msg-bubble {
     padding: var(--space-4) var(--space-5);
-    border: 1px solid var(--color-border, #ddd);
-    background: var(--color-bg-alt, #fff);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-alt);
     border-radius: 14px;
     line-height: 1.5;
     white-space: pre-wrap;
     word-wrap: break-word;
     font-size: var(--text-sm, 0.9rem);
-    color: var(--color-text, #222);
+    color: var(--color-text);
 }
 
+/* User messages */
 .msg-user .msg-bubble {
-    background: linear-gradient(180deg, #e6f2ff, #d9ecff);
-    color: #1a1a1a;
-    border: 1px solid #b3d7ff;
+    background: var(--color-accent-bg, linear-gradient(180deg, #e6f2ff, #d9ecff));
+    border-color: var(--color-accent-border, #b3d7ff);
+    color: var(--color-text);
 }
 
-.minimal .msg-user .msg-bubble {
-    background: #f0f7ff;
-    border-color: #b3d7ff;
-}
-
+/* AI messages */
 .msg-ai .msg-bubble {
-    background: #f9f9f9;
-    border-color: #e0e0e0;
-    color: #222;
+    background: var(--color-surface, #f9f9f9);
+    border-color: var(--color-border);
+    color: var(--color-text);
 }
 
+/* Pending AI messages (typing) */
 .msg-ai.pending .msg-bubble {
     display: inline-flex;
     gap: 6px;
 }
 
+/* Error messages */
 .msg-error .msg-bubble {
     border-color: var(--color-danger, #ff4d4d);
-    color: var(--color-danger, #d00000);
+    color: var(--color-danger-text, #d00000);
 }
 
 /* Actions bar */
@@ -87,7 +86,7 @@
     pointer-events: auto;
 }
 
-/* Other buttons fade in on hover/focus */
+/* Other buttons fade in */
 .msg-actions button:not(:first-child) {
     opacity: 0;
     pointer-events: none;
@@ -104,30 +103,30 @@
 .msg-actions button {
     width: 30px;
     height: 30px;
-    background: #fff;
-    border: 1px solid #ddd;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     cursor: pointer;
-    color: #666;
+    color: var(--color-text-muted);
     padding: 0;
     transition: transform 0.15s ease, background 0.2s, color 0.2s;
 }
 
 .msg-actions button:hover {
-    background: #f5f5f5;
-    color: #000;
+    background: var(--color-hover, #f5f5f5);
+    color: var(--color-text);
 }
 
-/* Scale effect on click */
+/* Scale effect */
 .msg-actions button:active {
     transform: scale(0.9);
 }
 
 .msg-actions button:focus-visible {
-    outline: 2px solid #0073e6;
+    outline: 2px solid var(--color-accent);
     outline-offset: 2px;
 }
 
@@ -137,7 +136,7 @@
     stroke-width: 1.75;
 }
 
-/* Subtle fade in for new AI messages */
+/* Fade in AI messages */
 .msg-ai .msg-bubble {
     animation: fadeIn .25s ease;
 }

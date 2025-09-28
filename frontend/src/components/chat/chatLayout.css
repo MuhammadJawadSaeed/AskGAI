@@ -34,7 +34,7 @@
     }
 }
 
-/* Light minimal variant */
+/* ================= Light minimal variant ================= */
 .chat-layout.minimal {
     --color-bg: #f9f9f9;
     --color-bg-alt: #ffffff;
@@ -180,4 +180,74 @@
 
 .chat-layout.minimal .messages::-webkit-scrollbar-thumb:hover {
     background: #bbb;
+}
+
+/* ================= Dark theme overrides ================= */
+[data-theme="dark"] .chat-layout.minimal {
+    --color-bg: #111827;
+    --color-bg-alt: #1f2937;
+    --color-surface: #1e293b;
+    --color-border: #374151;
+    --color-text: #f3f4f6;
+    --color-text-muted: #9ca3af;
+    --color-accent: #60a5fa;
+
+    background: linear-gradient(180deg, #111827 0%, #1f2937 60%, #1f2937 100%);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .chat-layout.minimal .chat-mobile-bar,
+[data-theme="dark"] .chat-layout.minimal .chat-icon-btn,
+[data-theme="dark"] .chat-layout.minimal .chat-sidebar,
+[data-theme="dark"] .chat-layout.minimal .sidebar-header,
+[data-theme="dark"] .chat-layout.minimal .small-btn,
+[data-theme="dark"] .chat-layout.minimal .chat-list-item {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .chat-layout.minimal .chat-icon-btn:hover,
+[data-theme="dark"] .chat-layout.minimal .small-btn:hover,
+[data-theme="dark"] .chat-layout.minimal .chat-list-item:hover {
+    background: #374151;
+}
+
+[data-theme="dark"] .chat-layout.minimal .chat-list-item.active {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+[data-theme="dark"] .chat-layout.minimal .msg-bubble {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .chat-layout.minimal .msg-user .msg-bubble {
+    background: #1e40af;
+    border-color: #3b82f6;
+    color: #f9fafb;
+}
+
+[data-theme="dark"] .chat-layout.minimal .msg-role {
+    color: var(--color-text-muted);
+}
+
+[data-theme="dark"] .chat-layout.minimal .msg-error .msg-bubble {
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
+/* Dark scrollbar */
+[data-theme="dark"] .chat-layout.minimal .messages::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+
+[data-theme="dark"] .chat-layout.minimal .messages::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+
+[data-theme="dark"] .chat-layout.minimal .messages::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
 }

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import "../styles/theme.css"; // adjust path if needed
 
-const ThemeToggle = ({ className = "theme-toggle" }) => {
-  const [theme, setTheme] = useState(() => {
-    return document.documentElement.getAttribute("data-theme") || "light";
-  });
+function ThemeToggle({ className = "theme-toggle" }) {
+  // Load theme from localStorage or default to light
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "light"
+  );
 
+  // Apply theme to <html> attribute
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  // Toggle between light/dark
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
@@ -23,9 +27,9 @@ const ThemeToggle = ({ className = "theme-toggle" }) => {
         theme === "light" ? "Switch to dark mode" : "Switch to light mode"
       }
     >
-      {theme === "light" ? "Dark Mode" : "Light Mode"}
+      {theme === "light" ? " Dark Mode" : " Light Mode"}
     </button>
   );
-};
+}
 
 export default ThemeToggle;
