@@ -137,7 +137,6 @@ MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 OPENAI_API_KEY=your_openai_api_key
 PINECONE_API_KEY=your_pinecone_api_key
-PINECONE_ENVIRONMENT=your_pinecone_environment
 ```
 
 ### 3. Start Backend
@@ -158,7 +157,7 @@ npm run dev
 
 ### 5. Access App
 
-Go to → <http://localhost:5173>
+Go to → <https://askgai.onrender.com>
 
 ### 6. API Testing
 
